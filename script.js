@@ -138,7 +138,7 @@ clearButton.addEventListener('click', () => {
 equalsButton.addEventListener('click', () => {
   calculator.calculate();
   calculator.updateDisplay();
-  calculator.currentDisplay.classList.add('result')
+  calculator.currentDisplay.classList.add('result');
 });
 
 
