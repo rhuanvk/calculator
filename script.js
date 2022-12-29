@@ -2,14 +2,14 @@
 const previousDisplay = document.querySelector('[data-previousOperand]');
 const currentDisplay = document.querySelector('[data-currentOperand]');
 
-// Calculator keyboard
+// Calculator numbers and operators
 const numbers = document.querySelectorAll('[data-number]');
 const operators = document.querySelectorAll('[data-operator]');
 
+// Calculator functional buttons
 const equalsButton = document.querySelector('[data-equals]');
 const clearButton = document.querySelector('[data-clear]');
 const deleteButton = document.querySelector('[data-delete]');
-
 
 class Calculator {
   constructor(previousDisplay, currentDisplay) {
@@ -71,9 +71,15 @@ class Calculator {
     }
   }
 
-  updateDisplay() {
-    this.previousDisplay.innerText = `${this.formatDisplay(this.previousOperand)} ${this.operation || ''}`;
-    this.currentDisplay.innerText = this.formatDisplay(this.currentOperand);
+  outputNumber(number) {
+    if (this.currentOperand.toString().includes('.') && number === '.') return;
+    // Clear display if the number showing is the result
+    if (this.result != '' && this.currentDisplay.classList.contains('result')) {
+      this.currentOperand = '';
+      this.currentDisplay.classList.remove('result');
+    }
+
+    this.currentOperand = `${this.currentOperand}${number.toString()}`;
   }
 
   chooseOperation(operator) {
@@ -87,16 +93,16 @@ class Calculator {
     this.currentOperand = '';
   }
 
-  outputNumber(number) {
-    if (this.currentOperand.includes('.') && number === '.') return;
-
-    this.currentOperand = `${this.currentOperand}${number.toString()}`;
+  updateDisplay() {
+    this.previousDisplay.innerText = `${this.formatDisplay(this.previousOperand)} ${this.operation || ''}`;
+    this.currentDisplay.innerText = this.formatDisplay(this.currentOperand);
   }
 
   clear() {
     this.previousOperand = '';
     this.currentOperand = '';
     this.operation = undefined;
+    this.result = undefined;
   }
 
   delete() {
@@ -104,11 +110,9 @@ class Calculator {
   }
 }
 
-const calculator = new Calculator(
-  previousDisplay,
-  currentDisplay
-);
+const calculator = new Calculator(previousDisplay, currentDisplay);
 
+// When a number is pressed, it goes to the display
 for (const number of numbers) {
   number.addEventListener('click', () => {
     calculator.outputNumber(number.innerText);
@@ -116,6 +120,7 @@ for (const number of numbers) {
   });
 }
 
+// When an operator is pressed the value informed before goes upside
 for (const operator of operators) {
   operator.addEventListener('click', () => {
     calculator.chooseOperation(operator.innerText);
@@ -123,16 +128,21 @@ for (const operator of operators) {
   });
 }
 
+// Make the "AC" button clear the display
 clearButton.addEventListener('click', () => {
   calculator.clear();
   calculator.updateDisplay();
 });
 
+// Make the "=" button calculate and show the result
 equalsButton.addEventListener('click', () => {
   calculator.calculate();
   calculator.updateDisplay();
+  calculator.currentDisplay.classList.add('result')
 });
 
+
+// Make the "DEL" button erase the last number
 deleteButton.addEventListener('click', () => {
   calculator.delete();
   calculator.updateDisplay();
