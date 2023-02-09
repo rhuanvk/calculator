@@ -173,6 +173,7 @@ deleteButton.addEventListener("click", () => {
     calculator.updateDisplay();
 });
 
+// Add keyboard support
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "0":
