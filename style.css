@@ -19,7 +19,7 @@ body {
   grid-template-rows: minmax(100px, auto) repeat(5, 80px);
 }
 
-.calculator > .output {
+.calculator>.output {
   grid-column: 1/-1;
   background: #222;
   display: flex;
@@ -31,17 +31,22 @@ body {
   word-break: break-all;
 }
 
-.calculator > .output > .previous {
+.calculator>.output>.previous {
   color: rgba(255, 255, 255, 0.75);
   font-size: 1rem;
 }
 
-.calculator > .output > .current {
+.calculator>.output>.current {
   color: white;
   font-size: 2rem;
 }
 
-.calculator > button {
+.calculator>.output>.error {
+  color: white;
+  font-size: 15px;
+}
+
+.calculator>button {
   cursor: pointer;
   font-size: 2rem;
   border: none;
@@ -50,15 +55,15 @@ body {
   color: #eee;
 }
 
-.calculator > button:hover {
+.calculator>button:hover {
   background-color: #eee;
   color: black;
 }
 
-.calculator > .operator {
+.calculator>.operator {
   background-color: #424242;
 }
 
-.calculator > .span {
+.calculator>.span {
   grid-column: span 2;
 }

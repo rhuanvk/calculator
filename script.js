@@ -1,6 +1,7 @@
 // Calculator output
 const previousDisplay = document.querySelector("[data-previousOperand]");
 const currentDisplay = document.querySelector("[data-currentOperand]");
+const errorDisplay = document.querySelector("[data-error]");
 
 // Calculator numbers and operators
 const numbers = document.querySelectorAll("[data-number]");
@@ -11,11 +12,19 @@ const equalsButton = document.querySelector("[data-equals]");
 const clearButton = document.querySelector("[data-clear]");
 const deleteButton = document.querySelector("[data-delete]");
 
+const add = (num1, num2) => num1 + num2;
+const subtract = (num1, num2) => num1 - num2;
+const multiply = (num1, num2) => num1 * num2;
+const divide = (num1, num2) =>
+   num1 === 0
+      ? (currentDisplay.innerHTML = errorDisplay.innerHTML =
+           "[ERROR] Can not divide by zero")
+      : num1 / num2;
+
 class Calculator {
    constructor(previousDisplay, currentDisplay) {
       this.previousDisplay = previousDisplay;
       this.currentDisplay = currentDisplay;
-
       this.clear();
    }
 
@@ -23,21 +32,24 @@ class Calculator {
       let result;
       const previousOperandFloat = parseFloat(this.previousOperand);
       const currentOperandFloat = parseFloat(this.currentOperand);
+      console.log(previousOperandFloat);
+      console.log(currentOperandFloat);
 
       if (isNaN(previousOperandFloat) || isNaN(currentOperandFloat)) return;
 
       switch (this.operation) {
          case "+":
-            result = previousOperandFloat + currentOperandFloat;
+            result = add(previousOperandFloat, currentOperandFloat);
             break;
          case "-":
-            result = previousOperandFloat - currentOperandFloat;
+            result = subtract(previousOperandFloat, currentOperandFloat);
             break;
          case "*":
-            result = previousOperandFloat * currentOperandFloat;
+            result = multiply(previousOperandFloat, currentOperandFloat);
             break;
          case "/":
-            result = previousOperandFloat / currentOperandFloat;
+            result = divide(previousOperandFloat, currentOperandFloat);
+            console.log(result);
             break;
          default:
             return;
@@ -77,9 +89,11 @@ class Calculator {
       if (
          this.result != "" &&
          this.currentDisplay.classList.contains("result")
+         // &&  this.errorDisplay.classList.contains("error")
       ) {
          this.currentOperand = "";
          this.currentDisplay.classList.remove("result");
+         //  this.errorDisplay.innerHTML = "";
       }
 
       this.currentOperand = `${this.currentOperand}${number.toString()}`;
@@ -106,7 +120,6 @@ class Calculator {
    clear() {
       this.previousOperand = "";
       this.currentOperand = "";
-      console.log(this.currentOperand);
       this.operation = undefined;
       this.result = undefined;
    }
