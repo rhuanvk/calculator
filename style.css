@@ -1,69 +1,69 @@
 * {
-  box-sizing: border-box;
-  font-family: sans-serif;
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background: linear-gradient(to right, #233329, #41b883);
+    background: linear-gradient(to right, #233329, #41b883);
 }
 
 .calculator {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  min-height: 100vh;
-  grid-template-columns: repeat(4, 80px);
-  grid-template-rows: minmax(100px, auto) repeat(5, 80px);
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 80px);
 }
 
-.calculator>.output {
-  grid-column: 1/-1;
-  background: #222;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 8px;
-  word-wrap: break-word;
-  word-break: break-all;
+.calculator > .output {
+    grid-column: 1/-1;
+    background: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 8px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
-.calculator>.output>.previous {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 1rem;
+.calculator > .output > .previous {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1rem;
 }
 
-.calculator>.output>.current {
-  color: white;
-  font-size: 2rem;
+.calculator > .output > .current {
+    color: white;
+    font-size: 2rem;
 }
 
-.calculator>.output>.error {
-  color: white;
-  font-size: 15px;
+.calculator > .output > .error {
+    color: white;
+    font-size: 15px;
 }
 
-.calculator>button {
-  cursor: pointer;
-  font-size: 2rem;
-  border: none;
-  outline: none;
-  background-color: black;
-  color: #eee;
+.calculator > button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: none;
+    outline: none;
+    background-color: black;
+    color: #eee;
 }
 
-.calculator>button:hover {
-  background-color: #eee;
-  color: black;
+.calculator > button:hover {
+    background-color: #eee;
+    color: black;
 }
 
-.calculator>.operator {
-  background-color: #424242;
+.calculator > .operator {
+    background-color: #424242;
 }
 
-.calculator>.span {
-  grid-column: span 2;
+.calculator > .span {
+    grid-column: span 2;
 }
