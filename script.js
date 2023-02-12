@@ -21,7 +21,15 @@ const divide = (num1, num2) =>
       ? (errorDisplay.innerHTML = "[ERROR] Cannot divide by zero")
       : num1 / num2;
 
+//A constructor is a special type of function that helps set
+// up an object when it is created. And a class is like a plan
+// for what the object should look like, including what it can
+//do and what it contains. Classes make it easier to create similar
+//objects with the same characteristics.
+
+// Create the Calculator class with its constructor and methods
 class Calculator {
+   // Constructor that initializes the previousDisplay and currentDisplay
    constructor(previousDisplay, currentDisplay) {
       this.previousDisplay = previousDisplay;
       this.currentDisplay = currentDisplay;
@@ -36,8 +44,10 @@ class Calculator {
       console.log(previousOperandFloat);
       console.log(currentOperandFloat);
 
+      // If either of the operands is not a number, return
       if (isNaN(previousOperandFloat) || isNaN(currentOperandFloat)) return;
 
+      // Switch statement to choose the correct operation based on this.operation
       switch (this.operation) {
          case "+":
             result = add(previousOperandFloat, currentOperandFloat);
@@ -56,11 +66,13 @@ class Calculator {
             return;
       }
 
+      // Reset the operation, previousOperand, and set the result as the currentOperand
       this.operation = undefined;
       this.previousOperand = "";
       this.currentOperand = result;
    }
 
+   // Function to format the number before displaying it
    formatDisplay(number) {
       const stringNumber = number.toString();
 
@@ -69,24 +81,33 @@ class Calculator {
 
       let integerDisplay;
 
+      // Check if the integer digits are valid
       if (isNaN(integerDigits)) {
+         // If not, set integerDisplay to an empty string
          integerDisplay = "";
       } else {
+         // If yes, format the integer digits to a locale string
          integerDisplay = integerDigits.toLocaleString("en", {
             maximumFractionDigits: 0,
          });
       }
+      // Check if the decimal digits are present
       if (decimalDigits != null) {
+         // If yes, return the formatted string
          return `${integerDisplay}.${decimalDigits}`;
       } else {
+         // If not, return the formatted integer string
          return integerDisplay;
       }
    }
+   // Check if the current operand contains a decimal point and the selected number is also a decimal point
 
    outputNumber(number) {
-      if (this.currentOperand.toString().includes(".") && number === ".")
-         return;
       // Clear display if the number showing is the result
+      if (this.currentOperand.toString().includes(".") && number === ".")
+         // If yes, return without doing anything
+         return;
+      // Clear the display if the number showing is the result of a calculation
       if (
          this.result != "" &&
          this.currentDisplay.classList.contains("result")
@@ -95,28 +116,38 @@ class Calculator {
          this.currentDisplay.classList.remove("result");
       }
 
+      // Add the selected number to the current operand
       this.currentOperand = `${this.currentOperand}${number.toString()}`;
    }
 
+   // Function to choose the operation to perform
    chooseOperation(operator) {
+      // Return if there is no current operand
       if (this.currentOperand == "") return;
+      // Return if there is no current operand
       if (this.previousOperand !== "") {
          this.calculate();
       }
 
+      // Store the selected operator and the previous operand
       this.operation = operator;
       this.previousOperand = this.currentOperand;
       this.currentOperand = "";
    }
 
+   // Function to update the calculator display
    updateDisplay() {
+      // Update the previous display with the previous operand and the selected operator
       this.previousDisplay.innerText = `${this.formatDisplay(
          this.previousOperand
       )} ${this.operation || ""}`;
+      // Update the current display with the current operand
       this.currentDisplay.innerText = this.formatDisplay(this.currentOperand);
    }
 
+   // Function to clear the calculator
    clear() {
+      // Reset the previous
       this.previousOperand = "";
       this.currentOperand = "0";
       this.operation = undefined;
@@ -124,6 +155,12 @@ class Calculator {
    }
 
    delete() {
+      if (this.currentOperand === "0") return;
+      if (
+         this.currentOperand.toString().length === 1 &&
+         parseFloat(this.currentOperand) <= 0
+      )
+         return;
       this.currentOperand = this.currentOperand.toString().slice(0, -1);
    }
 
